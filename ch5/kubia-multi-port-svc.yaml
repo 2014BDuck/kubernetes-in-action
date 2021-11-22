@@ -11,4 +11,4 @@ spec:
     port: 443
     targetPort: https
   selector:
-    app: kubia-manual
+    app: kubia
