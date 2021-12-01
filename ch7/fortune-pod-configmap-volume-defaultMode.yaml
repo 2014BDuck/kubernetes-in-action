@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fortune-configmap-volume-defaultmode
+spec:
+  containers:
+  - image: nginx:alpine
+    name: web-server
+    volumeMounts:
+      - mountPath: /usr/share/nginx/html
+        name: html
+        readOnly: true
+      - name: config
+        mountPath: /etc/nginx/conf.d
+        readOnly: true
+    ports:
+    - containerPort: 80
+      protocol: TCP
+  volumes:
+  - name: html
+    emptyDir: {}
+  - name: config
+    configMap:
+      name: fortune-config
+      defaultMode: 0664
+      items:
+        - key: my-nginx-config.conf
+          path: gzip.conf
